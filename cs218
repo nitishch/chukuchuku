@@ -1,0 +1,17 @@
+#!/bin/bash
+rm cs218
+wget --no-proxy http://www.cse.iitb.ac.in/~sundar/cs218
+i=1
+while [ $i -le $(sed -n 's/^.*href="\([^.]*\)\.pdf.*$/\1.pdf/p' cs218 | wc -l) ]
+do
+	if [ -f $(echo "$(sed -n "s/^.*href=\"\([^.]*\)\.pdf.*$/\1.pdf/p" cs218)" | sed -n "${i}p") ]
+	then
+	echo "already present"
+	else
+	wget --no-proxy http://www.cse.iitb.ac.in/~sundar/cs218/$(echo "$(sed -n "s/^.*href=\"\([^.]*\)\.pdf.*$/\1.pdf/p" cs218)" | sed -n "${i}p")
+	echo "gotit"
+	fi
+	i=$[$i+1]
+done
+rm cs218
+#sed -n 's/^.*href="\(.*\)\.pdf.*$/\1.pdf/p' cs218
